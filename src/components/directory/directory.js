@@ -12,10 +12,11 @@ class Directory extends Component {
     }
 
     render() {
+        const { sections } = this.state;
         return (
             <div className="directory-menu">
                 {
-                    this.state.sections.map(({ id,...otherProps }) => {
+                    sections.map(({ id,...otherProps }) => {
                         // Object spreading below of ...otherProps is similar to title={title} imageUrl={imageUrl} etc...
                         return <MenuItem key={id} {...otherProps} />
                     })
