@@ -1,0 +1,29 @@
+.header {
+    height: 70px;
+    width: 100%;
+    // Using display flex so that when justify-content: between is used, the children will be
+    // pushed apart as far as possible with any remaining space that the children does not take up
+    // as far as the width is concerned.
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  
+    .logo-container {
+      height: 100%;
+      width: 70px;
+      padding: 25px;
+    }
+  
+    .options {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+  
+      .option {
+        padding: 10px 15px;
+      }
+    }
+  }
+  
