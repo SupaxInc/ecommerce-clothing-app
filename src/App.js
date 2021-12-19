@@ -23,7 +23,7 @@ class App extends Component {
     // Built in method from auth firebase library that checks if a user has logged in using OAuth.
     // This is an open subscription between this application and Firebase.
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      // Check if the userAuth exists
+      // Check if there is an authenticated user that is logged in
       if(userAuth) {
         // If there is an authenticated user logged in, retrieve the document reference object of the user
         const userRef = await createUserProfileDocument(userAuth);
@@ -37,6 +37,8 @@ class App extends Component {
               id: snapShot.id,
               ...snapShot.data()
             }
+          }, () => {
+            console.log(this.state);
           });
         });
       }
