@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import FormInput from "../form-input/form-input";
 import CustomButton from "../custom-button/custom-button";
-import { signInWithGoogle } from "../../firebase/firebase.utils";
+import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 import './sign-in.scss';
 
 class SignIn extends Component {
@@ -14,15 +14,23 @@ class SignIn extends Component {
     }
 
     // Handles the onSubmit event from the form
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
+        const { email, password } = this.state;
         // Need to prevent the default submit action from firing 
         // We want to full control over exactly what the submit will do
         event.preventDefault();
 
-        this.setState({
-            email: '',
-            password: ''
-        });
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+
+            this.setState({
+                email: '',
+                password: ''
+            });
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
 
     // Handles the onChange event from all inputs
