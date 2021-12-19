@@ -1,10 +1,15 @@
 .sign-in {
-    width: 30vw;
+    width: 380px;
     display: flex;
     // We want all of our elements inside the sign-in component to sit vertically.
     flex-direction: column;
 
     .title {
         margin: 10px 0;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
     }
 }
