@@ -3,7 +3,7 @@ import Homepage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop';
 import SignInAndSignUpPage from './pages/signin-and-signup/signin-and-signup';
 import Header from './components/header/header';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
@@ -51,6 +51,8 @@ class App extends Component {
   }
 
   render() {
+    const { currentUser } = this.props;
+
     return (
       <div >
         { 
@@ -61,7 +63,8 @@ class App extends Component {
         <Routes>
             <Route path='/' element={ <Homepage />}/>
             <Route path='shop' element={ <ShopPage /> }/>
-            <Route path='signin' element={ <SignInAndSignUpPage /> }/>
+            {/* When a currentUser exists, we re-direct to the home page */}
+            <Route path='signin' element={currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />}/>
         </Routes>
       </div>
     );
@@ -69,11 +72,18 @@ class App extends Component {
 
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = ({ user }) => {
   return {
-    // dispatch() is a way to pass an action object to every reducer
-    setCurrentUser: user => dispatch(setCurrentUser(user))
+    currentUser: user.currentUser
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    // dispatch() is a way to pass an action object to every reducer
+    // we can now use this new setCurrentUser object function property to set the state of the currentUser
+    setCurrentUser: user => dispatch(setCurrentUser(user)) 
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
