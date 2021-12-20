@@ -1,11 +1,13 @@
 import React from 'react';
+import CartIcon from '../cart-icon/cart-icon';
+import CartDropdown from '../cart-dropdown/cart-dropdown';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
 import './header.scss'
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, cartHidden }) => {
     return (
         <div className='header'>
             <Link className='logo-container' to="/">
@@ -28,16 +30,24 @@ const Header = ({ currentUser }) => {
                         SIGN IN
                     </Link>
                 }
+                <CartIcon />
             </div>
+            {
+                cartHidden ?
+                null
+                :
+                <CartDropdown />
+            }
         </div>
     )
 }
 
 // Used to subscribe to store updates to re-render the component if the state changes.
-const mapStateToProps = state => {
+const mapStateToProps = ({ user: { currentUser }, cart: { cartHidden } }) => {
     // The state argument is the root reducer
     return {
-        currentUser: state.user.currentUser // grabbing the currentUser state from userReducer function when state changes.
+        currentUser, // grabbing the currentUser state from userReducer function when state changes.
+        cartHidden
     }
 }
 
