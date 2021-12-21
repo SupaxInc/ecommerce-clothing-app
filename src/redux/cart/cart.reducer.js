@@ -10,7 +10,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case CartActionTypes.TOGGLE_CART_HIDDEN:
             return {
-                ...state,
+                ...state, // Make sure to spread the other state properties so we don't replace an entirely new object with just the one state
                 cartHidden: !state.cartHidden
             };
         case CartActionTypes.ADD_ITEM:
