@@ -67,7 +67,7 @@ class App extends Component {
         <Header />
         <Routes>
             <Route path='/' element={ <Homepage />}/>
-            <Route path='shop' element={ <ShopPage /> }/>
+            <Route path='shop/*' element={ <ShopPage /> }/>
             <Route path='checkout' element={ <CheckoutPage /> }/>
             {/* When a currentUser exists, we re-direct to the home page */}
             <Route path='signin' element={currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />}/>
