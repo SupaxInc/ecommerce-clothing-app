@@ -24,3 +24,25 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
         return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
     }
 }
+
+export const removeItemFromCart = (cartItems, cartItemToRemove) => {
+    // Check if the cart item selected to remove exists inside the cartItem state
+    const existingCartItem = cartItems.find(cartItem => cartItem.id === cartItemToRemove.id);
+
+    if(existingCartItem.quantity === 1) {
+        return cartItems.filter(item => item.id !== cartItemToRemove.id)
+    }
+    else {
+        return cartItems.map(item => {
+            if(item.id === cartItemToRemove.id) {
+                return {
+                    ...item,
+                    quantity: item.quantity - 1
+                }
+            }
+            else {
+                return item;
+            }
+        });
+    }
+}

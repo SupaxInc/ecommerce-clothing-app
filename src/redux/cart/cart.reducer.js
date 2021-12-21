@@ -1,5 +1,5 @@
 import { CartActionTypes } from "./cart.types";
-import { addItemToCart } from "./cart.utils";
+import { addItemToCart, removeItemFromCart } from "./cart.utils";
 
 const INITIAL_STATE = {
     cartHidden: true,
@@ -24,6 +24,11 @@ const cartReducer = (state = INITIAL_STATE, action) => {
                 cartItems: state.cartItems.filter(item => { // create a new array of items that were not selected to be cleared from the cart
                     return item.id !== action.payload.id
                 })
+            }
+        case CartActionTypes.REMOVE_ITEM:
+            return {
+                ...state,
+                cartItems: removeItemFromCart(state.cartItems, action.payload)
             }
         default:
             return state;

@@ -25,7 +25,16 @@
     }
   
     .quantity {
-      padding-left: 20px;
+      // Places the items in a horizontal side-by-side alignment
+      display: flex;
+
+      .arrow {
+        cursor: pointer;
+      }
+
+      .value {
+        margin: 0 10px;
+      }
     }
   
     .remove-button {
