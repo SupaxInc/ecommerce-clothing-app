@@ -1,0 +1,35 @@
+.checkout-page {
+    // The page itself only has 55% total to it
+    width: 55%;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px auto 0;
+  
+    .checkout-header {
+        // The checkout header is 100% of the 55% of the total page
+        width: 100%;
+        padding: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid darkgrey;
+  
+      .header-block {
+        text-transform: capitalize;
+        // The header block is 23% of the checkout-header width except for the last child which totals to 100%
+        width: 23%;
+  
+        &:last-child {
+          width: 8%;
+        }
+      }
+    }
+  
+    .total {
+      margin-top: 30px;
+      margin-left: auto;
+      font-size: 36px;
+    }
+  }
+  

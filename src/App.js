@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import Homepage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop';
 import SignInAndSignUpPage from './pages/signin-and-signup/signin-and-signup';
+import CheckoutPage from './pages/checkout/checkout';
+
 import Header from './components/header/header';
+
 import { Route, Routes, Navigate } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
+
+import { selectCurrentUser } from './redux/user/user.selector';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import './App.css';
@@ -63,6 +68,7 @@ class App extends Component {
         <Routes>
             <Route path='/' element={ <Homepage />}/>
             <Route path='shop' element={ <ShopPage /> }/>
+            <Route path='checkout' element={ <CheckoutPage /> }/>
             {/* When a currentUser exists, we re-direct to the home page */}
             <Route path='signin' element={currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />}/>
         </Routes>
@@ -72,9 +78,9 @@ class App extends Component {
 
 }
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = (state) => {
   return {
-    currentUser: user.currentUser
+    currentUser: selectCurrentUser(state)
   }
 }
 

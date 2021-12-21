@@ -19,3 +19,19 @@ export const selectCartItemsCount = createSelector(
         }, 0);
     }
 );
+
+// Create a selector for the cartItems state and return the total cost of each item
+export const selectCartItemsTotal = createSelector(
+    [selectCartItems],
+    cartItems => {
+        return cartItems.reduce((acc, item) => {
+            return acc + (item.price * item.quantity);
+        }, 0);
+    }
+)
+
+// Create a selector for the cartHidden state inside the cart object
+export const selectCartHidden = createSelector(
+    [selectCart],
+    (cart) => cart.cartHidden
+);
