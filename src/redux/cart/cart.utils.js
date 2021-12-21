@@ -1,3 +1,6 @@
+/* 
+    Adds item to the cart and increments the quantity property
+*/
 export const addItemToCart = (cartItems, cartItemToAdd) => {
     // .find() returns the first item found in the array depending on a condition
     // checks if there are any existing cart items compared to the cart item we are adding

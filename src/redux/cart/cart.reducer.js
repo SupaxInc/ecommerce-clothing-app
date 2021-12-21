@@ -18,6 +18,13 @@ const cartReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 cartItems: addItemToCart(state.cartItems, action.payload) // Use the utility function to add the item to cart
             }
+        case CartActionTypes.CLEAR_ITEM_FROM_CART:
+            return {
+                ...state,
+                cartItems: state.cartItems.filter(item => { // create a new array of items that were not selected to be cleared from the cart
+                    return item.id !== action.payload.id
+                })
+            }
         default:
             return state;
     }
