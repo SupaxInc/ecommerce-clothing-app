@@ -1,5 +1,6 @@
 .collection-item {
-    width: 22%;
+  // Changed from 22% to 22vw, the actual width needs to be the width of the window to make it more responsive
+    width: 22vw;
     display: flex;
     // Allow our footer and image to sit in vertical alignment
     flex-direction: column;
