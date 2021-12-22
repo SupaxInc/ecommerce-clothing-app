@@ -1,10 +1,10 @@
 import React from "react";
 
-import './custom-button.scss'
+import { CustomButtonContainer } from "./custom-button.styles";
 
-const CustomButton = ({ children, isGoogleSignIn, inverted, ...otherProps }) => {
+const CustomButton = ({ children, ...props }) => {
     return (
-        <button className={`${inverted ? 'inverted' : ''} ${isGoogleSignIn ? 'google-sign-in' : ''} custom-button`} {...otherProps}>
+        <CustomButtonContainer {...props}>
             {
                 /*
                     Children property allows us to grab the 
@@ -12,7 +12,7 @@ const CustomButton = ({ children, isGoogleSignIn, inverted, ...otherProps }) => 
                 */
             }
             {children}
-        </button>
+        </CustomButtonContainer>
     )
 }
 
