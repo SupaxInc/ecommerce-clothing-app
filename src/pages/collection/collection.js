@@ -10,7 +10,6 @@ import './collection.scss';
 
 const CollectionPage = ({collection}) => {
     const { title, items } = collection;
-    console.log(collection);
 
     return (
         <div className="collection-page">
@@ -35,4 +34,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 // Using higher order component withRouter to return params as a prop
-export default compose(withRouter, connect(mapStateToProps))(CollectionPage);
+export default compose(
+    withRouter, 
+    connect(mapStateToProps))(CollectionPage);

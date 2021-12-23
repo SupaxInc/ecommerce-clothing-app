@@ -12,7 +12,6 @@ const CollectionPreview = ({ title, items}) => {
                         // Use filter if you need to use filter out what needs to be rendered using map
                         .filter((item, index) => index < 4)
                         .map((item) => {
-                            console.log(item);
                             return <CollectionItem key={item.id} item={item} />
                         })
                 }

@@ -28,3 +28,16 @@ export const selectShopCollectionsId = memoize((collectionUrlParam) => {
         collections => collections ? collections[collectionUrlParam] : null
     )
 });
+
+// Creates a selector for the isFetching state from the shop reducer
+export const selectIsCollectionFetching = createSelector(
+    [selectShop],
+    shop => shop.isFetching
+);
+
+// Create a selector that checks if the collections state is empty or not and returns a boolean value
+export const selectIsCollectionsLoaded = createSelector(
+    [selectShop],
+    // Returns a boolean value using the !! operator, helps with falsey values
+    shop => !!shop.collections
+)
