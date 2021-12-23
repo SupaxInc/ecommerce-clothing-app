@@ -15,7 +15,7 @@ export const selectShopCollectionsForPreview = createSelector(
     [selectShopCollections],
     // Get the keys of the collections object and put it in an array
     // Return a new array of each collection using the array of keys
-    collections => Object.keys(collections).map(key => collections[key])
+    collections => collections ? Object.keys(collections).map(key => collections[key]) : []
 )
 
 // Create a selector that returns the state of the object that contains the dynamic parameter. (hats, jackets, etc)
@@ -25,6 +25,6 @@ export const selectShopCollectionsForPreview = createSelector(
 export const selectShopCollectionsId = memoize((collectionUrlParam) => {
     return createSelector(
         [selectShopCollections],
-        collections => collections[collectionUrlParam]
+        collections => collections ? collections[collectionUrlParam] : null
     )
 });

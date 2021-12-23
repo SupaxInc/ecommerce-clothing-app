@@ -50,6 +50,31 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     return userRef;
 }
 
+// Convert the collection snapshot to an array we can use in our Shop page component
+export const convertCollectionsSnapshotToMap = (collections) => {
+    // Grab the docs array of document snapshots and convert it to a new array of objects with properties that we need
+    const transformedCollection = collections.docs.map(doc => {
+        // .data() turns the snapshot into an object
+        const { title, items } = doc.data();
+
+        return {
+            // Need to encode characters before passing as a URL
+            routeName: encodeURI(title.toLowerCase()),
+            // Grab the ID of the document from Firestore
+            id: doc.id,
+            title,
+            items
+        }
+    });
+
+    return  transformedCollection.reduce((acc, collection) => {
+        // Assign an empty object with a property of the collection title then equal it to the collection
+        acc[collection.title.toLowerCase()] = collection;
+        return acc;
+    }, {});
+
+}
+
 const provider = new firebase.auth.GoogleAuthProvider();
 // Always trigger the google pop up whenever we use the google auth provider for sign in
 provider.setCustomParameters({ prompt: 'select_account'}); 

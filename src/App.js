@@ -10,8 +10,8 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
-
 import { selectCurrentUser } from './redux/user/user.selector';
+
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
