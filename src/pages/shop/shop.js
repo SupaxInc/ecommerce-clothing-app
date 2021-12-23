@@ -33,7 +33,7 @@ class ShopPage extends Component{
 
         // onSnapshot attaches a listener and creates a snapshot immediately
         // compared to get() where it only receives the snapshot once
-        this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+        collectionRef.get().then(async snapshot => {
             const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
             updateCollections(collectionsMap);
             this.setState({loading: false});
