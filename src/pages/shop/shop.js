@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
+import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 
 import CollectionsOverviewContainer from '../../components/collection-overview/collections-overview.container';
 import CollectionPageContainer from '../collection/collection.container';
@@ -11,9 +11,9 @@ import { Route, Routes } from 'react-router-dom';
 class ShopPage extends Component {
 
     componentDidMount() {
-        const { fetchCollectionsStartAsync } = this.props;
+        const { fetchCollectionsStart } = this.props;
 
-        fetchCollectionsStartAsync();
+        fetchCollectionsStart();
     }
 
     render() {
@@ -32,7 +32,7 @@ class ShopPage extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync())
+        fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
     }
 }
 
