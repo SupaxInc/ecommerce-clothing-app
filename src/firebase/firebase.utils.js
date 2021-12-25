@@ -1,6 +1,6 @@
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore'; // For the database
-import 'firebase/compat/auth';  // For auth
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
 
 const firebaseConfig = {
     apiKey: "AIzaSyB3kjxaMGnXxSEVZrGsxfeUc0kAUSTrT7s",
@@ -16,6 +16,19 @@ firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+
+export const getCurrentUser = () => {
+    // Need to return a promise so we can use yield/await
+    return new Promise((resolve, reject) => {
+        const unsubscribe = auth.onAuthStateChanged(userAuth => {
+            // Unsubscribe from the onAuthStateChanged when the user's sign in changes
+            unsubscribe();
+            // return the userAuth object or a null value if it does not exist
+            resolve(userAuth);
+        
+        }, reject)
+    })
+}
 
 // Making an API request to store the authenticated user to the database
 export const createUserProfileDocument = async (userAuth, additionalData) => {
@@ -75,9 +88,9 @@ export const convertCollectionsSnapshotToMap = (collections) => {
 
 }
 
-const provider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 // Always trigger the google pop up whenever we use the google auth provider for sign in
-provider.setCustomParameters({ prompt: 'select_account'}); 
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+googleProvider.setCustomParameters({ prompt: 'select_account'}); 
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default firebase;
