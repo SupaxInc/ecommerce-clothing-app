@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 import FormInput from "../form-input/form-input";
 import CustomButton from "../custom-button/custom-button";
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+
+import { signUpStart } from "../../redux/user/user.actions";
+
 import './sign-up.scss';
 
 class SignUp extends Component {
@@ -17,6 +21,8 @@ class SignUp extends Component {
 
     handleSubmit = async event => {
         const { displayName, email, password, confirmPassword } = this.state;
+        const { signUpStart } = this.props;
+
         // Prevent the default submit action
         event.preventDefault();
 
@@ -25,25 +31,12 @@ class SignUp extends Component {
             return;
         }
 
-        try {
-            // Auth method createUserWithEmailAndPassword creates a new user account with specified email and password from Email/Password authentication provider
-            // Returns a userAuth object upon successful creation
-            const { user } = await auth.createUserWithEmailAndPassword(email, password);
-
-            // displayName is in an object because in the function we are destructuring the second parameter
-            await createUserProfileDocument(user, { displayName });
-
-            // If all promise methods succeed, we want to clear out our form by setting the state to the initial state again.
-            this.setState({
-                displayName: '',
-                email: '',
-                password: '',
-                confirmPassword: ''
-            });
-        }
-        catch (err) {
-            console.error(err);
-        }
+        // Dispatch 'SIGN_UP_START' action
+        signUpStart({
+            email,
+            displayName,
+            password
+        });
     };
 
     handleChange = event => {
@@ -99,4 +92,10 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signUpStart: (registerInfo) => dispatch(signUpStart(registerInfo))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(SignUp);

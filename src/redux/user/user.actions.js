@@ -13,6 +13,19 @@ export const emailSignInStart = (emailAndPassword) => {
     }
 }
 
+export const signOutStart = () => {
+    return {
+        type: UserActionTypes.SIGN_OUT_START
+    }
+}
+
+export const signUpStart = (registerInfo) => {
+    return {
+        type: UserActionTypes.SIGN_UP_START,
+        payload: registerInfo
+    }
+}
+
 export const signInSuccess = (user) => {
     return {
         type: UserActionTypes.SIGN_IN_SUCCESS,
@@ -20,9 +33,36 @@ export const signInSuccess = (user) => {
     }
 }
 
+export const signOutSuccess = () => {
+    return {
+        type: UserActionTypes.SIGN_OUT_SUCCESS,
+    }
+}
+
+export const signUpSuccess = ({ user, additionalData }) => {
+    return {
+        type: UserActionTypes.SIGN_UP_SUCCESS,
+        payload: { user, additionalData }
+    }
+}
+
 export const signInFailure = (error) => {
     return {
         type: UserActionTypes.SIGN_IN_FAILURE,
+        payload: error
+    }
+}
+
+export const signOutFailure = (error) => {
+    return {
+        type: UserActionTypes.SIGN_OUT_FAILURE,
+        payload: error
+    }
+}
+
+export const signUpFailure = (error) => {
+    return {
+        type: UserActionTypes.SIGN_UP_FAILURE,
         payload: error
     }
 }
