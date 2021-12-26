@@ -2,7 +2,7 @@ import React from 'react';
 import CartIcon from '../cart-icon/cart-icon';
 import CartDropdown from '../cart-dropdown/cart-dropdown';
 
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectCartHidden } from '../../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 
@@ -11,7 +11,11 @@ import { signOutStart } from '../../redux/user/user.actions';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { HeaderContainer, LogoContainer, OptionsContainer, OptionDiv, OptionLink } from './header.styles';
 
-const Header = ({ currentUser, cartHidden, signOutStart }) => {
+const Header = () => {
+    const currentUser = useSelector(selectCurrentUser);
+    const cartHidden = useSelector(selectCartHidden);
+    const dispatch = useDispatch();
+
     return (
         <HeaderContainer>
             <LogoContainer to="/">
@@ -26,7 +30,7 @@ const Header = ({ currentUser, cartHidden, signOutStart }) => {
                 </OptionLink>
                 {
                     currentUser ? 
-                    <OptionDiv onClick={signOutStart}>
+                    <OptionDiv onClick={() => dispatch(signOutStart())}>
                         SIGN OUT
                     </OptionDiv>
                     :
@@ -46,19 +50,4 @@ const Header = ({ currentUser, cartHidden, signOutStart }) => {
     )
 }
 
-// Used to subscribe to store updates to re-render the component if the state changes.
-const mapStateToProps = (state) => {
-    // The state argument is the root reducer
-    return {
-        currentUser: selectCurrentUser(state), // grabbing the currentUser state from userReducer function when state changes.
-        cartHidden: selectCartHidden(state)
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        signOutStart: () => dispatch(signOutStart())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

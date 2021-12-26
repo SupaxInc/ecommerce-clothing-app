@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import FormInput from "../form-input/form-input";
 import CustomButton from "../custom-button/custom-button";
@@ -8,11 +8,13 @@ import { googleSignInStart, emailSignInStart } from "../../redux/user/user.actio
 
 import './sign-in.scss';
 
-const SignIn = ({ emailSignInStart, googleSignInStart } ) => {
+const SignIn = () => {
     const [userCredentials, setCredentials] = useState({ email: '', password: '' });
 
     // Destructuring from userCredentials state
     const { email, password } = userCredentials;
+
+    const dispatch = useDispatch();
 
     // Handles the onSubmit event from the form
     const handleSubmit = (event) => {
@@ -20,7 +22,7 @@ const SignIn = ({ emailSignInStart, googleSignInStart } ) => {
         // We want to full control over exactly what the submit will do
         event.preventDefault();
 
-        emailSignInStart(email, password);
+        dispatch(emailSignInStart({email, password}));
     }
 
     // Handles the onChange event from all inputs
@@ -62,7 +64,7 @@ const SignIn = ({ emailSignInStart, googleSignInStart } ) => {
                 />
                 <div className="buttons">
                     <CustomButton type='submit'>Sign In</CustomButton>
-                    <CustomButton type='button' onClick={googleSignInStart} isGoogleSignIn>Sign In with Google</CustomButton>
+                    <CustomButton type='button' onClick={() => dispatch(googleSignInStart)} isGoogleSignIn>Sign In with Google</CustomButton>
                 </div>
 
             </form>
@@ -70,11 +72,4 @@ const SignIn = ({ emailSignInStart, googleSignInStart } ) => {
     )
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        googleSignInStart: () => dispatch(googleSignInStart()),
-        emailSignInStart: (email, password) => dispatch(emailSignInStart({email, password}))
-    }
-}
-
-export default connect(null, mapDispatchToProps)(SignIn);
+export default SignIn;

@@ -8,20 +8,23 @@ import Header from './components/header/header';
 
 import { Route, Routes, Navigate } from 'react-router-dom';
 
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser } from './redux/user/user.selector';
 
 import { checkUserSession } from './redux/user/user.actions';
 
 import './App.css';
 
-const App = ({checkUserSession, currentUser}) => {
+const App = () => {
+  const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
+
   // componentDidMount using useEffect
   // checkUserSession is added into the array because it is a dispatch prop that is passed in from redux
   // If it is not added into the array, it can possibly trigger twice.
   useEffect(() => {
-    checkUserSession();
-  }, [checkUserSession]);
+    dispatch(checkUserSession());
+  }, [dispatch]);
 
   return (
     <div >
@@ -41,16 +44,4 @@ const App = ({checkUserSession, currentUser}) => {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: selectCurrentUser(state)
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    checkUserSession: () => dispatch(checkUserSession())
-  }
-} 
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
