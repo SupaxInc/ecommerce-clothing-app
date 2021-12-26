@@ -1,5 +1,6 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
 
 const StripeCheckoutButton = ({ price }) => {
     // Stripe requires payments to be made in cents.
@@ -8,7 +9,20 @@ const StripeCheckoutButton = ({ price }) => {
 
     // Triggers when the payment was successful which returns an object of the entered information
     const onToken = token => {
-        alert('Payment Successful');
+        axios({
+            url: 'payment',
+            method: 'post',
+            // Body to send to the server
+            data: {
+                amount: priceForStripe,
+                token
+            }
+        }).then(response => {
+            alert("Payment successful!");
+        }).catch(error => {
+            console.log('Payment error: ', JSON.parse(error));
+            alert("There was an issue with your payment. Please make sure you use the provided credit card in the red text below.");
+        });
     }
 
     // Lots of props to send to the StripeCheckout component, check out the docs

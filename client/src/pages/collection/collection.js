@@ -10,8 +10,9 @@ import './collection.scss';
 import { useParams } from "react-router-dom";
 
 const CollectionPage = () => {
-    const params = useParams();
-    const collection = useSelector(selectShopCollectionsId(params.categoryId));
+    // Params returns us the relative path or a parameter id
+    const { categoryId } = useParams();
+    const collection = useSelector(selectShopCollectionsId(categoryId));
     const { title, items } = collection;
 
 
