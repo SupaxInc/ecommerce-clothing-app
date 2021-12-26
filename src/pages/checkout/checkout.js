@@ -1,14 +1,16 @@
 import React from "react";
 import CheckoutItem from "../../components/checkout-item/checkout-item";
 import StripeCheckoutButton from "../../components/stripe-button/stripe-button";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { selectCartItems, selectCartItemsTotal } from "../../redux/cart/cart.selectors";
 
 import './checkout.scss'
 
 
-const CheckoutPage = ({ cartItems, cartItemsTotal }) => {
+const CheckoutPage = () => {
+    const cartItems = useSelector(selectCartItems);
+    const cartItemsTotal = useSelector(selectCartItemsTotal);
     return (
         <div className="checkout-page">
             <div className="checkout-header">
@@ -45,12 +47,4 @@ const CheckoutPage = ({ cartItems, cartItemsTotal }) => {
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        cartItems: selectCartItems(state),
-        cartItemsTotal: selectCartItemsTotal(state)
-    }
-    
-}
-
-export default connect(mapStateToProps)(CheckoutPage);
+export default CheckoutPage;

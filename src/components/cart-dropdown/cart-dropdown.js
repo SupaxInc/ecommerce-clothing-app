@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleCartHidden } from '../../redux/cart/cart.actions';
 
 import { useNavigate } from "react-router-dom";
@@ -12,8 +12,10 @@ import CustomButton from '../custom-button/custom-button';
 
 import './cart-dropdown.scss';
 
-const CartDropdown = ({cartItems, dispatch}) => {
+const CartDropdown = () => {
     const navigate = useNavigate();
+    const cartItems = useSelector(selectCartItems);
+    const dispatch = useDispatch();
 
     return (
         <div className='cart-dropdown'>
@@ -38,10 +40,4 @@ const CartDropdown = ({cartItems, dispatch}) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        cartItems: selectCartItems(state)
-    }
-}
-
-export default connect(mapStateToProps)(CartDropdown);
+export default CartDropdown;
