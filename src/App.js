@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import Homepage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop';
 import SignInAndSignUpPage from './pages/signin-and-signup/signin-and-signup';
@@ -15,34 +15,30 @@ import { checkUserSession } from './redux/user/user.actions';
 
 import './App.css';
 
-class App extends Component {
-
-  componentDidMount() {
-    const { checkUserSession } = this.props;
+const App = ({checkUserSession, currentUser}) => {
+  // componentDidMount using useEffect
+  // checkUserSession is added into the array because it is a dispatch prop that is passed in from redux
+  // If it is not added into the array, it can possibly trigger twice.
+  useEffect(() => {
     checkUserSession();
-  }
+  }, [checkUserSession]);
 
-  render() {
-    const { currentUser } = this.props;
-
-    return (
-      <div >
-        { 
-          /* Header/Navigation must be out of the Routes component so that it is 
-             always rendered regardless of which path the page is on */
-        }
-        <Header />
-        <Routes>
-            <Route path='/' element={ <Homepage />}/>
-            <Route path='shop/*' element={ <ShopPage /> }/>
-            <Route path='checkout' element={ <CheckoutPage /> }/>
-            {/* When a currentUser exists, we re-direct to the home page */}
-            <Route path='signin' element={currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />}/>
-        </Routes>
-      </div>
-    );
-  }
-
+  return (
+    <div >
+      { 
+        /* Header/Navigation must be out of the Routes component so that it is 
+            always rendered regardless of which path the page is on */
+      }
+      <Header />
+      <Routes>
+          <Route path='/' element={ <Homepage />}/>
+          <Route path='shop/*' element={ <ShopPage /> }/>
+          <Route path='checkout' element={ <CheckoutPage /> }/>
+          {/* When a currentUser exists, we re-direct to the home page */}
+          <Route path='signin' element={currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />}/>
+      </Routes>
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {
