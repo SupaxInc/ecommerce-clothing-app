@@ -13,7 +13,7 @@ import { selectCurrentUser } from './redux/user/user.selector';
 
 import { checkUserSession } from './redux/user/user.actions';
 
-import './App.css';
+import { GlobalStyle } from './global.styles';
 
 const App = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -28,6 +28,12 @@ const App = () => {
 
   return (
     <div >
+      {
+        /* 
+          Applying the global style styled component to every component
+        */
+      }
+      <GlobalStyle />
       { 
         /* Header/Navigation must be out of the Routes component so that it is 
             always rendered regardless of which path the page is on */
