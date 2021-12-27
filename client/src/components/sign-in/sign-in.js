@@ -64,7 +64,7 @@ const SignIn = () => {
                 />
                 <div className="buttons">
                     <CustomButton type='submit'>Sign In</CustomButton>
-                    <CustomButton type='button' onClick={() => dispatch(googleSignInStart)} isGoogleSignIn>Sign In with Google</CustomButton>
+                    <CustomButton type='button' onClick={() => dispatch(googleSignInStart())} isGoogleSignIn>Sign In with Google</CustomButton>
                 </div>
 
             </form>
