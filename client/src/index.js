@@ -8,6 +8,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store';
 
 import reportWebVitals from './reportWebVitals';
+import * as serviceWorker from './serviceWorkerRegistration';
+
 import './index.css';
 
 ReactDOM.render(
@@ -28,3 +30,5 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+serviceWorker.register();
