@@ -16,7 +16,7 @@ const app = express();
 const port = process.env.PORT || 5000
 
 // Allow gzipped compression for Heroku
-//app.use(compression);
+app.use(compression);
 // Body parser middleware makes sure any of the requests coming in to process the body tag and convert it to JSON
 app.use(bodyParser.json());
 // URL strings that we are receiving or passing does not contain any special characters
