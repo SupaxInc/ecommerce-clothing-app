@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'production') {
     // Allow gzipped compression for Heroku
     app.use(compression());
-    
+
     // Re-direct HTTP requests as HTTPS using express-sslify
     // Heroku runs a reverse proxy which makes it hard to detect if the original request was via HTTPS
     // This needs to only be used on production so HTTPS is not required in development
@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === 'production') {
 // When a user requests for a service-worker.js file, send them the file from the build folder
 app.get('/service-worker.js', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'service-worker.js'));
-})
+});
 
 app.post('/payment', (req, res) => {
     const body = {
