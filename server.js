@@ -16,8 +16,6 @@ const app = express();
 // If ran on DEV environment then run on port 5000
 const port = process.env.PORT || 5000
 
-// Allow gzipped compression for Heroku
-app.use(compression());
 // Body parser middleware makes sure any of the requests coming in to process the body tag and convert it to JSON
 app.use(bodyParser.json());
 // URL strings that we are receiving or passing does not contain any special characters
@@ -25,6 +23,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 if (process.env.NODE_ENV === 'production') {
+    // Allow gzipped compression for Heroku
+    app.use(compression());
+    
     // Re-direct HTTP requests as HTTPS using express-sslify
     // Heroku runs a reverse proxy which makes it hard to detect if the original request was via HTTPS
     // This needs to only be used on production so HTTPS is not required in development
