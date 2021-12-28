@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 
-import CollectionsOverviewContainer from '../../components/collection-overview/collections-overview.container';
-import CollectionPageContainer from '../collection/collection.container';
+import Spinner from '../../components/spinner/spinner';
+import ErrorBoundary from '../../components/error-boundary/error-boundary';
 
 import { Route, Routes } from 'react-router-dom';
+
+const CollectionsOverviewContainer = lazy(() => import('../../components/collection-overview/collections-overview.container'));
+const CollectionPageContainer = lazy(() => import('../collection/collection.container'));
 
 const ShopPage = () => {
     const dispatch = useDispatch();
@@ -20,10 +23,14 @@ const ShopPage = () => {
 
     return (
         <div className='shop-page'>
-            <Routes>
-                <Route path="/" element={<CollectionsOverviewContainer />} />
-                <Route path="/:categoryId" element={<CollectionPageContainer />} />
-            </Routes>
+            <ErrorBoundary>
+                <Suspense fallback={<Spinner />}>
+                    <Routes>
+                        <Route path="/" element={<CollectionsOverviewContainer />} />
+                        <Route path="/:categoryId" element={<CollectionPageContainer />} />
+                    </Routes>
+                </Suspense>
+            </ErrorBoundary>
         </div>
     );
 

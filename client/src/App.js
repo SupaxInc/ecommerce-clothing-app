@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
-import Homepage from './pages/homepage/homepage';
-import ShopPage from './pages/shop/shop';
-import SignInAndSignUpPage from './pages/signin-and-signup/signin-and-signup';
-import CheckoutPage from './pages/checkout/checkout';
+import React, { useEffect, lazy, Suspense } from 'react';
 
 import Header from './components/header/header';
+import ErrorBoundary from './components/error-boundary/error-boundary';
+import Spinner from './components/spinner/spinner';
 
 import { Route, Routes, Navigate } from 'react-router-dom';
 
@@ -14,6 +12,12 @@ import { selectCurrentUser } from './redux/user/user.selector';
 import { checkUserSession } from './redux/user/user.actions';
 
 import { GlobalStyle } from './global.styles';
+
+// Lazy loading components
+const Homepage = lazy(() => import('./pages/homepage/homepage'));
+const ShopPage = lazy(() => import('./pages/shop/shop'));
+const SignInAndSignUpPage = lazy(() => import('./pages/signin-and-signup/signin-and-signup'));
+const CheckoutPage = lazy(() => import('./pages/checkout/checkout'));
 
 const App = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -39,13 +43,17 @@ const App = () => {
             always rendered regardless of which path the page is on */
       }
       <Header />
-      <Routes>
-          <Route path='/' element={ <Homepage />}/>
-          <Route path='shop/*' element={ <ShopPage /> }/>
-          <Route path='checkout' element={ <CheckoutPage /> }/>
-          {/* When a currentUser exists, we re-direct to the home page */}
-          <Route path='signin' element={currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />}/>
-      </Routes>
+      <ErrorBoundary>
+        <Suspense fallback={<Spinner />}>
+          <Routes>
+              <Route path='/' element={ <Homepage />}/>
+              <Route path='shop/*' element={ <ShopPage /> }/>
+              <Route path='checkout' element={ <CheckoutPage /> }/>
+              {/* When a currentUser exists, we re-direct to the home page */}
+              <Route path='signin' element={currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />}/>
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 }
