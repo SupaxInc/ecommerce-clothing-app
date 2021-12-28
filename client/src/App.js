@@ -45,6 +45,7 @@ const App = () => {
       <Header />
       <ErrorBoundary>
         <Suspense fallback={<Spinner />}>
+          
           <Routes>
               <Route path='/' element={ <Homepage />}/>
               <Route path='shop/*' element={ <ShopPage /> }/>
