@@ -32,3 +32,24 @@ export const clearCart = () => {
         type: CartActionTypes.CLEAR_CART
     }
 }
+
+export const saveCartStart = (cart) => {
+    return {
+        type: CartActionTypes.SAVE_CART_START,
+        payload: cart
+    }
+}
+
+export const saveCartSuccess = (cart) => {
+    return {
+        type: CartActionTypes.SAVE_CART_SUCCESS,
+        payload: cart
+    }
+}
+
+export const saveCartFailure = (errorMessage) => {
+    return {
+        type: CartActionTypes.SAVE_CART_FAILURE,
+        payload: errorMessage
+    }
+}

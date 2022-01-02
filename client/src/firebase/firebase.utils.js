@@ -88,6 +88,26 @@ export const convertCollectionsSnapshotToMap = (collections) => {
 
 }
 
+export const saveCartToUserDocument = async (userAuth, cart) => {
+    try {
+        const userRef = firestore.doc(`users/${userAuth.uid}`)
+        const userSnapshot = await userRef.get();
+        const userData = await userSnapshot.data();
+        const { createdAt, displayName, email } = userData;
+        if(userSnapshot.exists) {
+            await userRef.set({
+                cart,
+                createdAt,
+                displayName,
+                email
+            });
+        }
+    }
+    catch (error) {
+        console.log("Cart could not be saved: ", error.message);
+    }
+}
+
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 // Always trigger the google pop up whenever we use the google auth provider for sign in
 googleProvider.setCustomParameters({ prompt: 'select_account'}); 

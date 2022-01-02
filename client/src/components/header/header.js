@@ -3,10 +3,10 @@ import CartIcon from '../cart-icon/cart-icon';
 import CartDropdown from '../cart-dropdown/cart-dropdown';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCartHidden } from '../../redux/cart/cart.selectors';
+import { selectCartHidden, selectCartItems } from '../../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 
-import { signOutStart } from '../../redux/user/user.actions';
+import { saveCartStart } from '../../redux/cart/cart.actions';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { HeaderContainer, LogoContainer, OptionsContainer, OptionDiv, OptionLink } from './header.styles';
@@ -14,6 +14,7 @@ import { HeaderContainer, LogoContainer, OptionsContainer, OptionDiv, OptionLink
 const Header = () => {
     const currentUser = useSelector(selectCurrentUser);
     const cartHidden = useSelector(selectCartHidden);
+    const cartItems = useSelector(selectCartItems);
     const dispatch = useDispatch();
 
     return (
@@ -30,7 +31,7 @@ const Header = () => {
                 </OptionLink>
                 {
                     currentUser ? 
-                    <OptionDiv onClick={() => dispatch(signOutStart())}>
+                    <OptionDiv onClick={() => dispatch(saveCartStart(cartItems))}>
                         SIGN OUT
                     </OptionDiv>
                     :

@@ -1,9 +1,11 @@
+import UserActionTypes from "../user/user.types";
 import { CartActionTypes } from "./cart.types";
 import { addItemToCart, removeItemFromCart } from "./cart.utils";
 
 const INITIAL_STATE = {
     cartHidden: true,
-    cartItems: []
+    cartItems: [],
+    error: null
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {
@@ -35,6 +37,17 @@ const cartReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 cartItems: [],
                 cartHidden: true
+            }
+        case UserActionTypes.SIGN_IN_SUCCESS:
+            return {
+                ...state,
+                cartItems: action.payload.cart,
+                error: null
+            }
+        case CartActionTypes.SAVE_CART_FAILURE:
+            return {
+                ...state,
+                error: action.payload
             }
         default:
             return state;

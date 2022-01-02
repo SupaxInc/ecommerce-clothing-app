@@ -1,7 +1,6 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 
 import UserActionTypes from './user.types';
-
 import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signUpFailure, signUpSuccess } from './user.actions';
 
 import { auth, googleProvider, createUserProfileDocument, getCurrentUser } from '../../firebase/firebase.utils';
@@ -92,6 +91,7 @@ export function* signOutAccount() {
     try {
         // Sign out the current user that is logged in
         yield auth.signOut();
+
         // Dispatch the 'SIGN_OUT_SUCCESS' action to change the state of current user to null
         // Also clears the cart state
         yield put(signOutSuccess());
