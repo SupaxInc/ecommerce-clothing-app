@@ -17,9 +17,11 @@ firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
+// Grabs the current user that is logged in auth object
 export const getCurrentUser = () => {
     // Need to return a promise so we can use yield/await
     return new Promise((resolve, reject) => {
+        // Create an onAuthStateChanged listener
         const unsubscribe = auth.onAuthStateChanged(userAuth => {
             // Unsubscribe from the onAuthStateChanged when the user's sign in changes
             unsubscribe();
@@ -88,12 +90,16 @@ export const convertCollectionsSnapshotToMap = (collections) => {
 
 }
 
+// Saves the users cart to Firebase using the user id
 export const saveCartToUserDocument = async (userAuth, cart) => {
     try {
+        // Grab the document reference object of the user that is currently logged in
         const userRef = firestore.doc(`users/${userAuth.uid}`)
+        // Grab the snapshot from the document ref object
         const userSnapshot = await userRef.get();
-        const userData = await userSnapshot.data();
-        const { createdAt, displayName, email } = userData;
+        // Retrieve the data from the snapshot
+        const { createdAt, displayName, email } = await userSnapshot.data();
+        // If the user exists then save the cart inside the reference object
         if(userSnapshot.exists) {
             await userRef.set({
                 cart,
@@ -109,6 +115,7 @@ export const saveCartToUserDocument = async (userAuth, cart) => {
 }
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
+
 // Always trigger the google pop up whenever we use the google auth provider for sign in
 googleProvider.setCustomParameters({ prompt: 'select_account'}); 
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);

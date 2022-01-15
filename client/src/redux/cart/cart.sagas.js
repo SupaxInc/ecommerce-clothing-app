@@ -14,7 +14,7 @@ export function* onSaveCartStart() {
 }
 
 export function* onSaveCartSuccess() {
-    yield takeLatest(CartActionTypes.SAVE_CART_SUCCESS, saveCart);
+    yield takeLatest(CartActionTypes.SAVE_CART_SUCCESS, saveCartSuccessSignOut);
 }
 
 // When a user successfully gets signed out from actions dispatched in user.sagas.js
@@ -29,19 +29,24 @@ export function* clearCartOnSignOut() {
     yield put(clearCart());
 }
 
+// Used to save the users cart upon sign out
 export function* saveCartStart({payload: cart}) {
-    yield put(saveCartSuccess(cart));
-}
-
-export function* saveCart({payload: cart}) {
     try {
+        // Grab the user auth object 
         const userAuth = yield getCurrentUser();
+        // Call the firebase util function that allows us to save the save the cart to Firebase
         yield call(saveCartToUserDocument, userAuth, cart);
-        yield put(signOutStart());
+        // Dispatch action that the cart has been successfully saved
+        yield put(saveCartSuccess());
     }
-    catch (error) {
+    catch(error) {
         yield put(saveCartFailure(error));
     }
+}
+
+// Dispatch user sign out action if the cart is successfully saved to Firestore
+export function* saveCartSuccessSignOut() {
+    yield put(signOutStart());
 }
 
 export function* cartSagas() {

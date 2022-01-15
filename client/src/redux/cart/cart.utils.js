@@ -25,6 +25,9 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
     }
 }
 
+/*
+    Remove the item from cart if it exists inside the cartItem state
+*/
 export const removeItemFromCart = (cartItems, cartItemToRemove) => {
     // Check if the cart item selected to remove exists inside the cartItem state
     const existingCartItem = cartItems.find(cartItem => cartItem.id === cartItemToRemove.id);
@@ -45,4 +48,16 @@ export const removeItemFromCart = (cartItems, cartItemToRemove) => {
             }
         });
     }
+}
+
+/*
+    Check if the user has a cart item object document from Firebase
+*/
+export const checkIfCartExists = (cartItems) => {
+    // If the users cartItem does not exist then return an empty cart
+    if(!cartItems) {
+        return [];
+    }
+    // If the users cartItem exists then return the cartItems as is
+    return cartItems;
 }

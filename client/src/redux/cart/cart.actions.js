@@ -40,10 +40,9 @@ export const saveCartStart = (cart) => {
     }
 }
 
-export const saveCartSuccess = (cart) => {
+export const saveCartSuccess = () => {
     return {
-        type: CartActionTypes.SAVE_CART_SUCCESS,
-        payload: cart
+        type: CartActionTypes.SAVE_CART_SUCCESS
     }
 }
 
@@ -51,5 +50,12 @@ export const saveCartFailure = (errorMessage) => {
     return {
         type: CartActionTypes.SAVE_CART_FAILURE,
         payload: errorMessage
+    }
+}
+
+export const setCartFromFirebase = (cart) => {
+    return {
+        type: CartActionTypes.SET_CART_FROM_FIREBASE,
+        payload: cart
     }
 }

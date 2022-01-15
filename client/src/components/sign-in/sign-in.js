@@ -9,6 +9,7 @@ import { googleSignInStart, emailSignInStart } from "../../redux/user/user.actio
 import './sign-in.scss';
 
 const SignIn = () => {
+    // Create a local state for user credentials
     const [userCredentials, setCredentials] = useState({ email: '', password: '' });
 
     // Destructuring from userCredentials state

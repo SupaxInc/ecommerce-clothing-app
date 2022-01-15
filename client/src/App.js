@@ -26,6 +26,7 @@ const App = () => {
   // componentDidMount using useEffect
   // checkUserSession is added into the array because it is a dispatch prop that is passed in from redux
   // If it is not added into the array, it can possibly trigger twice.
+  // Used to sign in the user upon refresh to keep the users session
   useEffect(() => {
     dispatch(checkUserSession());
   }, [dispatch]);

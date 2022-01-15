@@ -5,6 +5,8 @@ import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signUpFai
 
 import { auth, googleProvider, createUserProfileDocument, getCurrentUser } from '../../firebase/firebase.utils';
 
+import { setCartFromFirebase } from '../cart/cart.actions';
+
 export function* onGoogleSignInStart() {
     // Listening to 'GOOGLE_SIGN_IN_START' action if it has been dispatched
     yield takeLatest(UserActionTypes.GOOGLE_SIGN_IN_START, signInWithGoogle);
@@ -58,21 +60,32 @@ export function* signInWithEmail({payload: {email, password}}) {
 }
 
 // Creates a snapshot from the user auth reference object sent by signing in with google or email
-export function* getSnapshotFromUserAuthAndSignIn(userAuth, additionalData) {
+export function* getSnapshotFromUserAuthAndSignIn(userAuth, additionalData, isFromCheckUserSession) {
     try {
         const userRef = yield call(createUserProfileDocument, userAuth, additionalData);
         const userSnapshot = yield userRef.get();
+        const userData = yield userSnapshot.data();
         // Dispatch the "SIGN_IN_SUCCESS" action
         yield put(signInSuccess({
             id: userSnapshot.id,
-            ...userSnapshot.data()
+            ...userData
         }));
+
+        // Checks if the function was called from isUserAuthenticated
+        // This prevents setting the cart from firebase if the app was refreshed and the user is still authenticated
+        // We only need to set the cart if the user first signs in otherwise, we use redux-persist to set the cart during the users session
+        if(!isFromCheckUserSession) {
+            // Dispatch action to set the cart from firebase when a user logs in
+            yield put(setCartFromFirebase({ cart: userData.cart}));
+        }
+        
     }
     catch(error) {
         yield put(signInFailure(error));
     }
 }
 
+// Sign in the user if they are still authenticated
 export function* isUserAuthenticated() {
     try {
         // Receive a userAuth object or null depending on if the state has changed
@@ -80,7 +93,7 @@ export function* isUserAuthenticated() {
         // If the userAuth is null, then exit the function and don't dispatch any actions to change the current_user state
         if (!userAuth) return;
         // If the userAuth is not null, dispatch a "SIGN_IN_SUCCESS" action that sets the current_user state
-        yield call(getSnapshotFromUserAuthAndSignIn, userAuth)
+        yield call(getSnapshotFromUserAuthAndSignIn, userAuth, null, true)
     }
     catch (error) {
         yield put(signInFailure(error));
@@ -89,7 +102,7 @@ export function* isUserAuthenticated() {
 
 export function* signOutAccount() {
     try {
-        // Sign out the current user that is logged in
+        // Sign out the authenticated current user that is logged in
         yield auth.signOut();
 
         // Dispatch the 'SIGN_OUT_SUCCESS' action to change the state of current user to null

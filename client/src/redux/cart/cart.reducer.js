@@ -1,6 +1,5 @@
-import UserActionTypes from "../user/user.types";
 import { CartActionTypes } from "./cart.types";
-import { addItemToCart, removeItemFromCart } from "./cart.utils";
+import { addItemToCart, removeItemFromCart, checkIfCartExists } from "./cart.utils";
 
 const INITIAL_STATE = {
     cartHidden: true,
@@ -38,10 +37,10 @@ const cartReducer = (state = INITIAL_STATE, action) => {
                 cartItems: [],
                 cartHidden: true
             }
-        case UserActionTypes.SIGN_IN_SUCCESS:
+        case CartActionTypes.SET_CART_FROM_FIREBASE:
             return {
                 ...state,
-                cartItems: action.payload.cart,
+                cartItems: checkIfCartExists(action.payload.cart),
                 error: null
             }
         case CartActionTypes.SAVE_CART_FAILURE:
