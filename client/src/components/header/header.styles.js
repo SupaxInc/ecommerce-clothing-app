@@ -55,8 +55,5 @@ export const OptionContainer = css`
 export const OptionLink = styled(Link)`
     ${OptionContainer}
 `;
-
-// Adding the OptionContainer CSS style to the div HTML element that uses option class
-export const OptionDiv = styled.div`
-    ${OptionContainer}
-`;
+// Pass a display name property to the OptionLink styled component to be able to be used in tests
+OptionLink.displayName = "OptionLink";

@@ -31,9 +31,9 @@ const Header = () => {
                 </OptionLink>
                 {
                     currentUser ? 
-                    <OptionDiv onClick={() => dispatch(saveCartStart(cartItems))}>
+                    <OptionLink as='div' onClick={() => dispatch(saveCartStart(cartItems))}>
                         SIGN OUT
-                    </OptionDiv>
+                    </OptionLink>
                     :
                     <OptionLink to='/signin'>
                         SIGN IN

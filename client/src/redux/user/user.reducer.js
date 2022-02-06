@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case UserActionTypes.SIGN_IN_SUCCESS:
-            return {
+        return {
                 ...state,
                 currentUser: action.payload,
                 // Set the error to null if sign_in succeeds

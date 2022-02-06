@@ -34,7 +34,7 @@ export function* saveCartStart({payload: cart}) {
     try {
         // Grab the user auth object 
         const userAuth = yield getCurrentUser();
-        // Call the firebase util function that allows us to save the save the cart to Firebase
+        // Call the firebase util function that allows us to save the cart to Firebase
         yield call(saveCartToUserDocument, userAuth, cart);
         // Dispatch action that the cart has been successfully saved
         yield put(saveCartSuccess());
