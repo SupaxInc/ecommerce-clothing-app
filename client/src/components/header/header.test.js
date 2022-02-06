@@ -43,7 +43,7 @@ describe('Header component', () => {
 
     afterEach(() => {
         jest.clearAllMocks();
-    })
+    });
 
     it('should render Header component', () => {
         // Snapshot testing
