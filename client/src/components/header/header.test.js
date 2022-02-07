@@ -32,7 +32,9 @@ describe('Header component', () => {
     // Run the following code before each tests
     beforeEach(() => {
         // Set the initial state of all tests within suite
-        useSelectorMock.mockImplementation((callback) => callback(initialMockState));
+        useSelectorMock.mockImplementation((callback) => {
+            return callback(initialMockState);
+        });
         // If dispatch function is called, return the mocked dispatch function
         useDispatchMock.mockImplementation(() => {
             return mockDispatch;
