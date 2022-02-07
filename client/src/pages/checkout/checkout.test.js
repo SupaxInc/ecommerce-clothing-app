@@ -46,6 +46,10 @@ describe('CheckoutPage component', () => {
         expect(wrapper.find(CheckoutItem).length).toBe(cartItems.length);
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('should render the cartItems total based on price and quantity from cartItems array', () => {
         expect.assertions(1);
         let totalPrice = cartItems.reduce((acc, item) => {

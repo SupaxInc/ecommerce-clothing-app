@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`signin-and-signup page component should render signin-and-signup page 1`] = `ShallowWrapper {}`;
