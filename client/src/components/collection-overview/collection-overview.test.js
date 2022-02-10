@@ -25,7 +25,7 @@ describe('CollectionOverview component', () => {
 
     beforeEach(() => {
         // Selector should change collections object to an array by mapping the mockCollections keys
-        // Allows us to loop over the collections objects and create CollectionPreview items
+        // Allows us to loop over the collections objects and create CollectionPreview components
         /*
             mockCollectionsArray = [{
                 {id: 1}, {id: 2}, {id: 3}
@@ -34,6 +34,10 @@ describe('CollectionOverview component', () => {
         useSelectorMock.mockImplementation((callback) => callback(mockState));
 
         wrapper = shallow(<CollectionOverview />);
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
     it('should render CollectionOverview', () => {
