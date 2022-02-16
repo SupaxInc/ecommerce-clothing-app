@@ -5,17 +5,6 @@ import * as redux from 'react-redux';
 import SignIn from "./sign-in";
 import FormInput from "../form-input/form-input";
 
-// Allows us to create mock stores multiple times if needed
-export const createMockStore = ({ state, reducers }) => {
-    const store = createStore(combineReducers(reducers), state);
-    return {
-        ...store,
-        persistor: {
-            persist: () => null
-        }
-    }
-}
-
 describe('Sign In component', () => {
     let wrapper;
 
